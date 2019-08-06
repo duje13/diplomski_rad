@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Prepoznavanje riba</string>
+    <string name="import_image">Učitajte sliku</string>
+    <string name="take_image">Kamera</string>
+</resources>
