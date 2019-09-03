@@ -10,7 +10,6 @@ def OpenImage(file):
 	return image
 
 def ResizeImage(img):
-
     return cv2.resize(img, (750,750), interpolation = cv2.INTER_AREA)
 
 def GetLocalFeatures(img):

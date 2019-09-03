@@ -150,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
     public void ShowFish(int id) {
         Intent intent = new Intent(this, FishDisplayActivity.class);
         intent.putExtra(FISH_ID, id);
+
         startActivity(intent);
     }
 

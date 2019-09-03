@@ -5,11 +5,13 @@ import pickle
 import os
 from functions import *
 import json
+import sys
 
 print("Predicing...")
 
 test_path = "SLIKE_TEST"
 imgs = [f for f in os.listdir(test_path) if f.endswith(".jpg") or f.endswith(".jpeg") or f.endswith(".JPG")]
+#imgs = os.listdir(test_path)
 imgs.sort()
 
 resultsFile = open("SLIKE_TEST/vrste.txt", "r")
@@ -46,7 +48,7 @@ for file in imgs:
 
     fish = [i['name'] for i in train_labels if i['id'] == id][0]
 
-    print("It is " + fish)
+    print(file + " - " + fish)
 
     if(fish == results[i]):
         correct = correct + 1

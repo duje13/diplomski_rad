@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +28,9 @@ public class FishDisplayActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int id = intent.getIntExtra(MainActivity.FISH_ID, 0);
 
-        TextView tv = findViewById(R.id.textView);
+        int drawableID = getResources().getIdentifier("fish_" + id, "drawable", getPackageName());
+        ImageView iv = findViewById(R.id.fish_image);
+        iv.setImageResource(drawableID);
 
         String str = "";
         StringBuffer buf = new StringBuffer();
@@ -51,6 +54,8 @@ public class FishDisplayActivity extends AppCompatActivity {
         String fishes = buf.toString();
         JSONArray array = null;
         String name = null;
+        String latin_name = null;
+        String other_names = null;
 
         try {
             array = new JSONArray(fishes);
@@ -59,6 +64,8 @@ public class FishDisplayActivity extends AppCompatActivity {
                 JSONObject obj = array.getJSONObject(i);
                 if(obj.getInt("id") == id) {
                     name = obj.getString("name");
+                    latin_name = obj.getString("latin_name");
+                    other_names = obj.getString("other_names");
                     break;
                 }
             }
@@ -70,6 +77,12 @@ public class FishDisplayActivity extends AppCompatActivity {
             return;
         }
 
-        tv.setText(name);
+        TextView title = findViewById(R.id.fish_title);
+        TextView latin = findViewById(R.id.fish_latin);
+        TextView others = findViewById(R.id.fish_others);
+
+        title.setText(name);
+        latin.setText(latin_name);
+        others.setText(other_names);
     }
 }

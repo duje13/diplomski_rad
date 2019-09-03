@@ -21,18 +21,15 @@ descriptors = []
 for training_name in train_labels:
 	dir = os.path.join(train_path, training_name['name'])
 
-	images = [f for f in os.listdir(dir) if f.endswith(".jpg") or f.endswith(".jpeg") or f.endswith(".JPG")]
-	for f in range(0,15):
+	images = os.listdir(dir)
+	for f in range(0,20):
 		file = dir + "/" + images[f]
 
 		img = OpenImage(file)
 		dsc = GetLocalFeatures(img)
 		descriptors.extend(dsc)
 
-n = int(len(descriptors) / 2)
-descriptors = random.sample(descriptors, n)
-
-BOW = cv2.BOWKMeansTrainer(100,(cv2.TERM_CRITERIA_MAX_ITER, 10000, 1e-6))
+BOW = cv2.BOWKMeansTrainer(100)
 dic = BOW.cluster(np.array(descriptors))
 
 print("Saving dictionary...")
@@ -52,8 +49,8 @@ labels = []
 for training_name in train_labels:
 	dir = os.path.join(train_path, training_name['name'])
 
-	images = [f for f in os.listdir(dir) if f.endswith(".jpg") or f.endswith(".jpeg") or f.endswith(".JPG")]
-	for f in range(0,15):
+	images = os.listdir(dir)
+	for f in range(20,45):
 		file = dir + "/" + images[f]
 
 		img = OpenImage(file)
@@ -66,14 +63,14 @@ for training_name in train_labels:
 		traindata.append( np.hstack([bow, hist, hu, hog]))
 		labels.append(training_name['id'])
 
-svm = cv2.ml.RTrees_create()
+rt = cv2.ml.RTrees_create()
 
-svm.setTermCriteria((cv2.TERM_CRITERIA_MAX_ITER, 10000, 1e-6))
+rt.setTermCriteria((cv2.TERM_CRITERIA_MAX_ITER, 10000, 1e-6))
 
-svm.train(np.matrix(traindata, dtype=np.float32), cv2.ml.ROW_SAMPLE, np.array(labels))
+rt.train(np.matrix(traindata, dtype=np.float32), cv2.ml.ROW_SAMPLE, np.array(labels))
 
 print("Saving RT...")
 
-svm.save("model.xml")
+rt.save("model.xml")
 
 print("Finished!")

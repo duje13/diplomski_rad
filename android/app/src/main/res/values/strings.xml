@@ -2,4 +2,6 @@
     <string name="app_name">Prepoznavanje riba</string>
     <string name="import_image">Učitajte sliku</string>
     <string name="take_image">Kamera</string>
+    <string name="latin_name">Latinski naziv</string>
+    <string name="other_names">Ostala imena</string>
 </resources>
